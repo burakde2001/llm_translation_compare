@@ -1,13 +1,16 @@
 import { Box, Container, Link } from "@mui/material";
 import { useState } from "react";
 import LLMInterface from "./LLMInterface";
+import EvalLLMInterface from "./EvalLLMInterface";
 
-export default function LlmUi(llms: any) {
-  llms = llms.llms;
-
+/*
+  Zwischenkomponente, die sicherstellt, dass die LLMInterface Komponente nur angezeigt wird, wenn sich LLMs in der "llms" Liste befinden.
+  Component which makes sure that the LLMInterface component is only shown when there are LLMs inside the "llms" list.
+*/
+export default function LlmUi({ llms, evalLLM }: { llms: any; evalLLM: any }) {
   const [currentLLM, setCurrentLLM] = useState();
 
-  if (llms !== undefined) {
+  if (llms !== undefined && evalLLM !== undefined) {
     return (
       <Box sx={{ display: "flex", flexDirection: "row" }}>
         <Container
@@ -26,8 +29,8 @@ export default function LlmUi(llms: any) {
             </Link>
           ))}
         </Container>
-        <Container>
-          <LLMInterface llm={currentLLM} />
+        <Container sx={{ display: "flex", flexDirection: "row" }}>
+          <EvalLLMInterface llm={currentLLM} evalLLM={evalLLM} />
         </Container>
       </Box>
     );

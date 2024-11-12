@@ -43,3 +43,13 @@ Schritte:
 13. Starte Backend Anwendung mit ``uvicorn app:app --reload``
     1. "app" hinter dem Doppelpunkt steht für die Datei "app.py"
     2. "app" nach dem Doppelpunkt steht für die Instanz "app" in der Datei "app.py"
+
+Weiterführung:
+
+-Installiere OllamaSetup\
+-gehe in Installationsordner und öffne Terminal bzw. Powershell\
+-Lade herunter und starte beliebige LLM auf Ollama:\
+    1. ``ollama pull llama3.2``\
+    2. ``ollama run llama3.2`` (für direkte Kommunikation im Terminal)\
+-starte Ollama Server: ``ollama serve`` (Beenden mit Task Manager)\
+-Installiere Langchain Ollama: ``pip install -U langchain-ollama``\

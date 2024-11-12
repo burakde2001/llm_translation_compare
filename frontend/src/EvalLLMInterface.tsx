@@ -2,27 +2,32 @@ import { Button, Container, TextField, Typography } from "@mui/material";
 import { apiClient } from "./ApiClient";
 import { useState } from "react";
 
-export default function LLMInterface(llm: any) {
-  llm = llm.llm;
-
+export default function EvalLLMInterface({
+  llm,
+  evalLLM,
+}: {
+  llm: any;
+  evalLLM: any;
+}) {
   const [promptInput, setPromptInput] = useState("");
 
-  const [answer, setAnswer] = useState("");
+  const [evaluation, setEvaluation] = useState("");
 
   /*
-    Sendet den im Textfeld eingegebenen Prompt an eine Schnittstelle im Back End, welche eine Antwort zurückliefert.
-    Sends the prompt entered into the text field to an interface in the Back End, which returns an answer.
+    Sendet den im Textfeld der zu evaluierenden LLM eingegebenen Prompt an eine Schnittstelle im Back End, welche eine Antwort generiert und evaluieren lässt.
+    Sends the prompt entered into the text field of the LLM to evaluate to an interface in the Back End, which generates an answer and lets said answer get evaluated.
   */
-  const sendPrompt = (llm: string, prompt: string) => {
+  const sendPromptToEval = (llm: string, prompt: string) => {
     if (prompt || /^\s*$/.test(prompt)) {
       let encodedPrompt = encodeURIComponent(prompt);
-      let endpoint = `models/${llm}/${encodedPrompt}`;
+      let endpoint = `models/${llm}/${encodedPrompt}/eval`;
       apiClient
         .get(endpoint)
         .then((response) => {
           if (response.status === 200) {
-            let thisAnswer = response.data.content;
-            setAnswer(thisAnswer);
+            console.log(response.data);
+            let thisEval = response.data.content;
+            setEvaluation(thisEval);
           }
         })
         .catch((error) => {
@@ -41,7 +46,9 @@ export default function LLMInterface(llm: any) {
           width: 500,
         }}
       >
-        <Typography>{llm.model}</Typography>
+        <Typography>
+          LLM: {llm.model}, Evaluator LLM: {evalLLM.model}
+        </Typography>
         <TextField
           id={`${llm.model}_promptField`}
           sx={{ marginTop: 5, marginBottom: 5 }}
@@ -53,14 +60,14 @@ export default function LLMInterface(llm: any) {
           sx={{
             textTransform: "none",
           }}
-          onClick={() => sendPrompt(llm.model, promptInput)}
+          onClick={() => sendPromptToEval(llm.model, promptInput)}
         >
           Send
         </Button>
         <TextField
           sx={{ marginTop: 5, marginBottom: 5 }}
-          label={"Answer"}
-          value={answer}
+          label={"Evaluation"}
+          value={evaluation}
         />
       </Container>
     );
