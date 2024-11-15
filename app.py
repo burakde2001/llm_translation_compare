@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 from fastapi import FastAPI
+from langchain_ollama import OllamaLLM
 from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
 from langchain_openai import ChatOpenAI
@@ -12,6 +13,9 @@ llm_openai_3_5 = ChatOpenAI(model_name="gpt-3.5-turbo")
 llms.append(llm_openai_3_5)
 llm_openai_4 = ChatOpenAI(model_name="gpt-4")
 llms.append(llm_openai_4)
+#'ollama serve' MUSS in einer separaten Powershell vorher ausgeführt werden
+llm_llama_3_2 = OllamaLLM(model="llama3.2")
+llms.append(llm_llama_3_2)
 
 allowed_origins = [
     "http://localhost:5173"
@@ -37,7 +41,8 @@ def home():
 
 @app.get("/models/{m}")
 def get_llm_by_model(m: str):
-    return next((llm for llm in llms if llm.model_name == m), None)
+    return next((llm for llm in llms if (hasattr(llm, 'model_name') and llm.model_name == m) or
+                 (hasattr(llm, 'model') and llm.model == m)), None)
 
 
 @app.get("/models/{m}/{prompt_text}")

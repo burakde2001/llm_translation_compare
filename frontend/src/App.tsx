@@ -7,6 +7,10 @@ import LlmUi from "./LlmUi";
 function App() {
   const [llms, setLlms] = useState();
 
+  /*
+    Holt vom Back End eine Liste von LLM Instanzen, auf die man in dieser Anwendung zugreifen kann.
+    Returns a list of LLM instances from the Back End for the user of this app to use.
+  */
   const getLLMs = (url: string) => {
     apiClient
       .get(url)

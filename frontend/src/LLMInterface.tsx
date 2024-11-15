@@ -9,6 +9,10 @@ export default function LLMInterface(llm: any) {
 
   const [answer, setAnswer] = useState("");
 
+  /*
+    Sendet den im Textfeld eingegebenen Prompt an eine Schnittstelle im Back End, welche eine Antwort zurückliefert.
+    Sends the prompt entered into the text field to an interface in the Back End, which returns an answer.
+  */
   const sendPrompt = (llm: string, prompt: string) => {
     if (prompt || /^\s*$/.test(prompt)) {
       let encodedPrompt = encodeURIComponent(prompt);
@@ -17,7 +21,10 @@ export default function LLMInterface(llm: any) {
         .get(endpoint)
         .then((response) => {
           if (response.status === 200) {
-            let thisAnswer = response.data.content;
+            let thisAnswer = response.data;
+            if (response.data.content) {
+              thisAnswer = response.data.content;
+            }
             setAnswer(thisAnswer);
           }
         })

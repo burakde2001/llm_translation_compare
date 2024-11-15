@@ -2,6 +2,10 @@ import { Box, Container, Link } from "@mui/material";
 import { useState } from "react";
 import LLMInterface from "./LLMInterface";
 
+/*
+  Zwischenkomponente, die sicherstellt, dass die LLMInterface Komponente nur angezeigt wird, wenn sich LLMs in der "llms" Liste befinden.
+  Component which makes sure that the LLMInterface component is only shown when there are LLMs inside the "llms" list.
+*/
 export default function LlmUi(llms: any) {
   llms = llms.llms;
 
