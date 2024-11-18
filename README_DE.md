@@ -53,3 +53,5 @@ Weiterführung:
     2. ``ollama run llama3.2`` (für direkte Kommunikation im Terminal)\
 -starte Ollama Server: ``ollama serve`` (Beenden mit Task Manager)\
 -Installiere Langchain Ollama: ``pip install -U langchain-ollama``\
+
+-Intalliere DeepEval: ``pip install -U deepeval"``
