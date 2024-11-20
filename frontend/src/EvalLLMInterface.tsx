@@ -19,10 +19,15 @@ export default function EvalLLMInterface({
   */
   const sendPromptToEval = (llm: string, prompt: string) => {
     if (prompt || /^\s*$/.test(prompt)) {
-      let encodedPrompt = encodeURIComponent(prompt);
-      let endpoint = `models/${llm}/${encodedPrompt}/eval`;
+      let endpoint = `models/posteval`;
+      const promptRequest = {
+        llm: llm,
+        prompt_text: prompt,
+      };
       apiClient
-        .get(endpoint)
+        .post(endpoint, promptRequest, {
+          headers: { "Content-Type": "application/json" },
+        })
         .then((response) => {
           if (response.status === 200) {
             console.log(response.data);
