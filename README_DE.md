@@ -49,7 +49,6 @@ Weiterführung:
 -gehe in Installationsordner und öffne Terminal bzw. Powershell\
 -Lade herunter und starte beliebige LLM auf Ollama:\
     1. ``ollama pull llama3.2``\
-    2. ``ollama run llama3.2`` (für direkte Kommunikation im Terminal)\
     2. ``ollama pull cyberwald/llama-3.1-sauerkrautlm-8b-instruct``\
     3. ``ollama pull hf.co/TheBloke/leo-hessianai-13B-chat-GGUF:latest``\
     4. ``ollama pull hf.co/TheBloke/DiscoLM_German_7b_v1-GGUF``\
