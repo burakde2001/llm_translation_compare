@@ -50,5 +50,15 @@ Weiterführung:
 -Lade herunter und starte beliebige LLM auf Ollama:\
     1. ``ollama pull llama3.2``\
     2. ``ollama run llama3.2`` (für direkte Kommunikation im Terminal)\
+    2. ``ollama pull cyberwald/llama-3.1-sauerkrautlm-8b-instruct``\
+    3. ``ollama pull hf.co/TheBloke/leo-hessianai-13B-chat-GGUF:latest``\
+    4. ``ollama pull hf.co/TheBloke/DiscoLM_German_7b_v1-GGUF``\
+    5. ``ollama pull mistral``\
+    6. ``ollama run <LLM>`` (für direkte Kommunikation im Terminal)\
+
 -starte Ollama Server: ``ollama serve`` (Beenden mit Task Manager)\
 -Installiere Langchain Ollama: ``pip install -U langchain-ollama``\
+
+-Intalliere DeepEval: ``pip install -U deepeval"``
+
+-Installiere Open WebUI mit Docker: ``docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main``
