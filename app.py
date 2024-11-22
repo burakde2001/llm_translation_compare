@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 from fastapi import FastAPI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_ollama import OllamaLLM
 from pydantic import BaseModel
 from starlette.middleware import Middleware
@@ -25,6 +26,10 @@ llm_sauerkraut = OllamaLLM(model="cyberwald/llama-3.1-sauerkrautlm-8b-instruct")
 llms.append(llm_sauerkraut)
 llm_mistral = OllamaLLM(model="mistral")
 llms.append(llm_mistral)
+
+
+llm_gemini = ChatGoogleGenerativeAI(model="gemini-1.5-pro")
+llms.append(llm_gemini)
 
 allowed_origins = [
     "http://localhost:5173"

@@ -61,3 +61,6 @@ Weiterführung:
 -Intalliere DeepEval: ``pip install -U deepeval"``
 
 -Installiere Open WebUI mit Docker: ``docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main``
+
+-Installiere Google AI: ``pip install -q -U google-generativeai``\
+-Installiere Langchain Google AI: ``pip install -q -U langchain-google-genai``
