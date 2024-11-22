@@ -5,7 +5,7 @@ load_dotenv()
 
 def execute_prompt(prompt):
     try:
-        model = ChatOpenAI(model_name="gpt-4o-mini")
+        model = ChatOpenAI(model_name="gpt-4o")
         return model.invoke(prompt)
     except Exception as e:
         return str(e)

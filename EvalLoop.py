@@ -12,16 +12,16 @@ class EvalLoop:
                 name="correctness",
                 criteria="Determine whether the actual output is correct.",
                 evaluation_params=[LLMTestCaseParams.INPUT, LLMTestCaseParams.ACTUAL_OUTPUT],
-                model="gpt-4o-mini"
+                model="gpt-4o"
             )
-    hallucination_metric = HallucinationMetric(threshold=0.5, model="gpt-4o-mini")
+    hallucination_metric = HallucinationMetric(threshold=0.5, model="gpt-4o")
     answer_relevancy_metric = AnswerRelevancyMetric(
         threshold=0.5,
         include_reason=True,
-        model="gpt-4o-mini"
+        model="gpt-4o"
     )
-    bias_metric = BiasMetric(threshold=0.5, model="gpt-4o-mini")
-    summarization_metric = SummarizationMetric(threshold=0.5, model="gpt-4o-mini")
+    bias_metric = BiasMetric(threshold=0.5, model="gpt-4o")
+    summarization_metric = SummarizationMetric(threshold=0.5, model="gpt-4o")
 
     def __init__(self, eval_set, metric, context):
         self.eval_set = eval_set
