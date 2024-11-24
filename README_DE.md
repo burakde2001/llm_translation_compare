@@ -66,4 +66,4 @@ Weiterführung:
 -Installiere Google AI: ``pip install -q -U google-generativeai``\
 -Installiere Langchain Google AI: ``pip install -q -U langchain-google-genai``
 
--Installiere pyperclip: ````
+-Installiere pyperclip: ``pip install pyperclip``
