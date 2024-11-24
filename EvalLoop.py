@@ -1,5 +1,6 @@
 import asyncio
 
+import pyperclip
 from deepeval.metrics import HallucinationMetric, GEval, AnswerRelevancyMetric, BiasMetric, SummarizationMetric
 from deepeval.test_case import LLMTestCaseParams, LLMTestCase
 from dotenv import load_dotenv
@@ -51,6 +52,7 @@ class EvalLoop:
 
 
     async def evaluate(self):
+        scores=[]
         try:
             for case in self.eval_set:
                 test_case = LLMTestCase(
@@ -59,12 +61,15 @@ class EvalLoop:
                     context=self.context
                 )
                 await self.eval_by_metric(self.metric, test_case)
+                scores.append(str(self.worker_metric.score))
+            pyperclip.copy("\n".join(scores))
             print("evaluated {}".format(self.metric))
         except Exception as e:
             return str(e)
 
 
     async def evaluate_summarization(self, to_summarize):
+        scores = []
         try:
             for case in self.eval_set:
                 test_case = LLMTestCase(
@@ -73,6 +78,8 @@ class EvalLoop:
                     context=self.context
                 )
                 await self.eval_by_metric(self.metric, test_case)
+                scores.append(str(self.worker_metric.score))
+            pyperclip.copy("\n".join(scores))
             print("evaluated {}".format(self.metric))
         except Exception as e:
             return str(e)
