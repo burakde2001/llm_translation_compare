@@ -8,6 +8,8 @@ from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
 from langchain_openai import ChatOpenAI
 
+from rag.init_pinecone import vectorstore
+
 load_dotenv()
 
 llms = []
@@ -101,6 +103,11 @@ def evaluate_answer_of_prompt(m: str, prompt_text: str):
         return "There exists no LLM or LLM Instance of this model"
 
 
+def query_pinecone(query_text, top_k=40):
+    docs = vectorstore.similarity_search(query_text, k=top_k)
+    return docs
+
+
 @app.post("/models/postreq")
 async def answer_prompt(request: PromptRequest):
     m = request.llm
@@ -113,3 +120,20 @@ async def eval_prompt(request: PromptRequest):
     m = request.llm
     prompt = request.prompt_text
     return evaluate_answer_of_prompt(m, prompt)
+
+
+@app.post("/rag/models/postreq")
+async def answer_prompt(request: PromptRequest):
+    m = request.llm
+    prompt = request.prompt_text
+    context = []
+    results = query_pinecone(prompt)
+    for doc in results:
+        context.append(doc.page_content)
+    llm_prompt = f"""
+    prompt: {prompt}
+
+    Generate an answer to the given prompt. For the answer, consider including information given in the following context. Don't repeat the prompt within the answer.
+    context: {context}
+    """
+    return answer_prompt_of_model(m, llm_prompt)

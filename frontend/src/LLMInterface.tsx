@@ -15,7 +15,7 @@ export default function LLMInterface(llm: any) {
   */
   const sendPrompt = (llm: string, prompt: string) => {
     if (prompt || /^\s*$/.test(prompt)) {
-      let endpoint = `models/postreq`;
+      let endpoint = `rag/models/postreq`;
       const promptRequest = {
         llm: llm,
         prompt_text: prompt,

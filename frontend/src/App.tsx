@@ -6,7 +6,6 @@ import LlmUi from "./LlmUi";
 
 function App() {
   const [llms, setLlms] = useState();
-  const [evalLLM, setEvalLLM] = useState();
 
   /*
     Holt vom Back End eine Liste von LLM Instanzen, auf die man in dieser Anwendung zugreifen kann.
@@ -25,23 +24,6 @@ function App() {
       });
   };
 
-  /*
-    Holt vom Back End die LLM Instanz für die Evaluierung der Antworten anderer LLMS.
-    Returns an LLM Instance of the LLM for the evaluation of the answers of other LLMS from the Back End.
-  */
-  const getEvalLLM = (url: string) => {
-    apiClient
-      .get(url)
-      .then((response) => {
-        if (response.status === 200) {
-          setEvalLLM(response.data);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-      });
-  };
-
   return (
     <div className="App" style={{ height: "100%" }}>
       <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
@@ -53,19 +35,12 @@ function App() {
           >
             get LLMs
           </Button>
-          <Button
-            variant="contained"
-            sx={{ textTransform: "none", marginLeft: "10px" }}
-            onClick={() => getEvalLLM("/eval")}
-          >
-            get Evaluation LLM
-          </Button>
         </Container>
         <Container
           sx={{ maxWidth: "100%", overflow: "auto", flex: 1, marginTop: 10 }}
           maxWidth={false}
         >
-          <LlmUi llms={llms} evalLLM={evalLLM} />
+          <LlmUi llms={llms} />
         </Container>
       </Box>
     </div>

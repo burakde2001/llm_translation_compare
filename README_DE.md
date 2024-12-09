@@ -67,3 +67,6 @@ Weiterführung:
 -Installiere Langchain Google AI: ``pip install -q -U langchain-google-genai``
 
 -Installiere pyperclip: ``pip install pyperclip``
+
+-Installiere Pinecone: ``pip install pinecone``\
+-Installiere Langchain Pinecone: ``pip install -qU langchain-pinecone pinecone-notebooks``
