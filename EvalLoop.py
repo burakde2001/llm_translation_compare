@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 
 from custom_metrics.grammatical_and_spelling_correctness.grammatical_and_spelling_correctness import \
     GrammaticalAndSpellingCorrectnessMetric
+from custom_metrics.grice_maxims.grice_maxims import GriceMaximsMetric
 
 load_dotenv()
 
@@ -27,6 +28,7 @@ class EvalLoop:
     bias_metric = BiasMetric(threshold=0.5, model="gpt-4o")
     summarization_metric = SummarizationMetric(threshold=0.5, model="gpt-4o")
     grammatical_and_spelling_correctness_metric = GrammaticalAndSpellingCorrectnessMetric(threshold=0.5, model="gpt-4o")
+    grice_maxims_metric = GriceMaximsMetric(threshold=0.5, model="gpt-4o")
 
     def __init__(self, eval_set, metric, context):
         self.eval_set = eval_set
@@ -48,6 +50,8 @@ class EvalLoop:
             self.worker_metric = self.summarization_metric
         elif metric == "grammatical and spelling correctness":
             self.worker_metric = self.grammatical_and_spelling_correctness_metric
+        elif metric == "grice maxims":
+            self.worker_metric = self.grice_maxims_metric
         try:
             await self.worker_metric.a_measure(test_case)
             await asyncio.sleep(0.1)
