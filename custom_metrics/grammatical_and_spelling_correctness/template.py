@@ -72,7 +72,7 @@ If there is nothing wrong, just say something positive with an upbeat encouragin
 IMPORTANT: Please make sure to only return in JSON format, with the 'reason' key providing the reason.
 Example JSON:
 {{
-    "reason": "The score is <answer_relevancy_score> because <your_reason>."
+    "reason": "The score is <grammatical_and_spelling_correctness_score> because <your_reason>."
 }}
 **
 
