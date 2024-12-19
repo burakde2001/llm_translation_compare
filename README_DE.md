@@ -70,3 +70,5 @@ Weiterführung:
 
 -Installiere Pinecone: ``pip install pinecone``\
 -Installiere Langchain Pinecone: ``pip install -qU langchain-pinecone pinecone-notebooks``
+
+-Installiere MAUVE: ``pip install mauve-text``

@@ -1,15 +1,31 @@
+import mauve
 import pyperclip
 import asyncio
 
 from deepeval.metrics import HallucinationMetric, GEval, AnswerRelevancyMetric, BiasMetric, SummarizationMetric
 from deepeval.test_case import LLMTestCaseParams, LLMTestCase
 from dotenv import load_dotenv
+from mauve.utils import featurize_tokens_from_model
+from transformers import AutoTokenizer, AutoModel
 
 from custom_metrics.grammatical_and_spelling_correctness.grammatical_and_spelling_correctness import \
     GrammaticalAndSpellingCorrectnessMetric
 from custom_metrics.grice_maxims.grice_maxims import GriceMaximsMetric
 
 load_dotenv()
+
+#Dafür gedacht, um menschlichen Referenztext p nicht bei jedem Durchlauf zu wiederholen, falls p immer gleich ist. Basiert auf compute_mauve.py, ist aber verkürzt und vereinfacht.
+async def featurize_text(texts):
+    tokenizer = AutoTokenizer.from_pretrained("gpt2-large") # Default model
+    model = AutoModel.from_pretrained("gpt2-large")
+    texts = [sen for sen in texts if len(sen) > 0]  # Remove empty strings.
+    tokenized_texts = [
+        tokenizer.encode(sen, return_tensors='pt', truncation=True, max_length=1024)
+        for sen in texts
+    ]
+    features = featurize_tokens_from_model(model, tokenized_texts, batch_size=1, name="p").detach().cpu().numpy()
+    return features
+
 
 class EvalLoop:
 
@@ -89,6 +105,22 @@ class EvalLoop:
                 )
                 await self.eval_by_metric(self.metric, test_case)
                 scores.append(str(self.worker_metric.score))
+            pyperclip.copy("\n".join(scores))
+            print("evaluated {}".format(self.metric))
+        except Exception as e:
+            return str(e)
+
+    async def evaluate_mauve(self, reference):
+        scores = []
+        try:
+            ref_features = await featurize_text(reference)
+            for case in self.eval_set:
+                mauve_result = mauve.compute_mauve(
+                    p_features=ref_features,
+                    q_text=case[1],
+                    device_id=0
+                )
+                scores.append(str(mauve_result.mauve))
             pyperclip.copy("\n".join(scores))
             print("evaluated {}".format(self.metric))
         except Exception as e:
