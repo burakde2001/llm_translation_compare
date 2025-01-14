@@ -123,7 +123,7 @@ async def eval_prompt(request: PromptRequest):
 
 
 @app.post("/rag/models/postreq")
-async def answer_prompt(request: PromptRequest):
+async def answer_prompt_rag(request: PromptRequest):
     m = request.llm
     prompt = request.prompt_text
     context = []
