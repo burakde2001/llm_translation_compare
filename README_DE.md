@@ -72,3 +72,13 @@ Weiterführung:
 -Installiere Langchain Pinecone: ``pip install -qU langchain-pinecone pinecone-notebooks``
 
 -Installiere MAUVE: ``pip install mauve-text``
+
+__\
+__\
+__\
+Hier ist eine kurze Erklärung der Branches:
+
+basic_display: Dazu da, um einfache Prompts ohne RAG per REST Request vom Frontend an Backend zu schicken, und Antwort zurückzubekommen, die im Frontend angezeigt wird.\
+basic_rag: Dazu da, um Pinecone Vektor DB zu initialisieren. Nach der (einmaligen) Initialisierung können per REST Request Prompts mit RAG vom Frontend an Backend geschickt und eine Antwort zurückbekommen werden, die im Frontend angezeigt wird.\
+with_results_and_tests: Dazu da, um Frage-Antwort Paare von LLMs zu speichern und Tests mit DeepEval und anderen Benchmarks durchzuführen.\
+main: aktuell auf gleichem Entwicklungsstand wie basic_rag; with_results_and_tests ohne 'results' und 'tests' Verzeichnisse.
