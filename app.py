@@ -1,6 +1,5 @@
 from dotenv import load_dotenv
 from fastapi import FastAPI
-from langchain_core.prompts import PromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_ollama import OllamaLLM
 from pydantic import BaseModel
@@ -58,17 +57,6 @@ class PromptRequest(BaseModel):
 
 app = FastAPI(middleware=middleware)
 
-code_prompt_eval_DE = PromptTemplate(
-    template="Bewerte die Antwort <{answer}> auf den Prompt <{p}>",
-    input_variables=["answer, p"]
-)
-
-sequence_DE = code_prompt_eval_DE | llm_eval
-
-def run_chain_eval_DE(answer, p):
-    result = sequence_DE.invoke({"answer": answer, "p": p})
-    return result
-
 
 @app.get("/")
 def home():
@@ -94,15 +82,6 @@ def answer_prompt_of_model(m: str, prompt_text: str):
         return "There exists no LLM or LLM Instance of this model"
 
 
-def evaluate_answer_of_prompt(m: str, prompt_text: str):
-    this_llm = get_llm_by_model(m)
-    if this_llm is not None:
-        answer = this_llm.invoke(prompt_text)
-        return run_chain_eval_DE(answer, prompt_text)
-    else:
-        return "There exists no LLM or LLM Instance of this model"
-
-
 def query_pinecone(query_text, top_k=40):
     docs = vectorstore.similarity_search(query_text, k=top_k)
     return docs
@@ -113,13 +92,6 @@ async def answer_prompt(request: PromptRequest):
     m = request.llm
     prompt = request.prompt_text
     return answer_prompt_of_model(m, prompt)
-
-
-@app.post("/models/posteval")
-async def eval_prompt(request: PromptRequest):
-    m = request.llm
-    prompt = request.prompt_text
-    return evaluate_answer_of_prompt(m, prompt)
 
 
 @app.post("/rag/models/postreq")
