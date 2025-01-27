@@ -36,11 +36,7 @@ class EvalLoop:
                 model="gpt-4o"
             )
     hallucination_metric = HallucinationMetric(threshold=0.5, model="gpt-4o")
-    answer_relevancy_metric = AnswerRelevancyMetric(
-        threshold=0.5,
-        include_reason=True,
-        model="gpt-4o"
-    )
+    answer_relevancy_metric = AnswerRelevancyMetric(threshold=0.5, model="gpt-4o")
     bias_metric = BiasMetric(threshold=0.5, model="gpt-4o")
     summarization_metric = SummarizationMetric(threshold=0.5, model="gpt-4o")
     grammatical_and_spelling_correctness_metric = GrammaticalAndSpellingCorrectnessMetric(threshold=0.5, model="gpt-4o")
