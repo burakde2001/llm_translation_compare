@@ -56,6 +56,8 @@ export default function EvalLLMInterface({
         </Typography>
         <TextField
           id={`${llm.model}_promptField`}
+          multiline
+          maxRows={1000}
           sx={{ marginTop: 5, marginBottom: 5 }}
           label={"Prompt"}
           onChange={(e) => setPromptInput(e.target.value)}
@@ -70,6 +72,8 @@ export default function EvalLLMInterface({
           Send
         </Button>
         <TextField
+          multiline
+          maxRows={1000}
           sx={{ marginTop: 5, marginBottom: 5 }}
           label={"Evaluation"}
           value={evaluation}
